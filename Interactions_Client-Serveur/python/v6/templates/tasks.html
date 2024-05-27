@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head title="TO DO list"></head>
+<body>
+<h1>TO DO list</h1>
+<table>
+    {% for task in tasks %}
+        {% if task['done'] %}
+        {% set color = 'gray' %}
+        {% set checked = 'checked' %}
+    {% endif %}
+    <tr>
+        <form action="/tasks/{{loop.index}}" method="POST">
+            <td>
+                <input type="checkbox" name="done" {{ checked }} onclick="submit()" />
+            </td>
+            <td>
+                <div style="color: {{color}}">{{task['title']}}</div>
+            </td>
+        </form>
+    </tr>
+    {% endfor %}
+</table>
+<hr/>
+<form action="/tasks" method="POST">
+    <label>New task: </label><input type="text" name="title"/>
+    <input type="submit" value="Create">
+</form>
+</body>
+</html>

@@ -6,7 +6,8 @@
 - mentionner langages: Javascript / HTML client, Python, Java, PHP
   
 # HTTP
-- mentionner cookies, voir livre
+- mentionner cookies, voir livre. Fermer / ouvrir le navigateur pour voir un nouveau cookie
+- parler cookies client /serveur 4k client, serveur il faut la bib
 
 
 ```mermaid

@@ -1,4 +1,4 @@
-# TP: Application TODO list
+# TP: Application TO DO list
 
 Nous allons créer une application client/serveur permettant de gérer une liste de tâches.
 

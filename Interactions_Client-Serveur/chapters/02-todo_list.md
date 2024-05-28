@@ -1,12 +1,10 @@
-__TOC__
-
 # TP: Application TO DO list
 
 Nous allons créer une application client/serveur permettant de gérer une liste de tâches.
 
 Dans notre TP, le client et le serveur seront tous les deux sur votre ordinateur.
 - Le client sera un navigateur web
-- Le serveur sera un programme Python utilisant le *framework* **Flask**
+- Le serveur sera un programme Python utilisant le *framework* [**Flask**](https://flask.palletsprojects.com/en/2.3.x/)
   - un framework est un ensemble de composants logiciels qui sert à créer les fondations d'un autre logiciel
 - Le client communiquera avec le serveur en utilisant le protocole HTTP.
    
@@ -90,12 +88,55 @@ def init():
 ### Analyse du code
 1. Déclare une variable globale `tasks` qui contient la liste des tâches à afficher.
 2. Déclare une variable `html` avec l'en-tête HTML, contenant un tableau.
-3. La boucle ajoute des lignes de tableau avec les balises `<tr><td>` pour chaque tâche 
-4. la fonction renvoie le code HTML à renvoyer au navigateur
+3. pour chaque tâche, ajoute des lignes de tableau avec les balises `<tr><td>` 
+4. utilise une `f-string` pour le code HTML propre à chaque tâche. 
+   Cette fonctionnalité de Python permet d'utiliser des variables `{ma_variable}` à l'intérieur d'une chaîne de caractères.
+5. la fonction renvoie le code HTML à renvoyer au navigateur
 5. nous ajoutons une `url_rule` pour pouvoir appeler notre fonction
 
 ### Exercices
 1. Dans le navigateur, observez le code HTML généré.
-2. Ajoutez une condition pour changer le style si la tâche a la valeur `done=True`.
+2. Ajoutez une condition pour changer le `style` si la tâche a la valeur `done=True`.
 3. Modifiez la variable `tasks` pour ajouter une tâche.
 
+# Utiliser un template
+Renvoyer du code HTML directement dans une fonction Python est une mauvaise pratique.
+Il est préférable de séparer le code HTML et le code Python. 
+Cela permet d'identifier clairement le code d'affichage (view)  et le code de traitement (controller).
+
+Par ailleurs, certains développeurs sont plus spécialisés dans les interfaces graphiques (développeurs "Front-end"), 
+et d'autres dans la partie serveur (développeurs "Back-End"). 
+Ils peuvent ainsi intervenir en parallèle sur différents aspects du logiciel sans se gêner.
+
+Nous allons déplacer le code HTML pour le mettre dans un template [Jinja](https://flask.palletsprojects.com/en/2.3.x/templating/).
+
+1. Créer un dossier `templates`, pui créer un fichier `tasks.html` dans ce nouvrau dossier. 
+2. copier/coller le code suivant dans `tasks.html`:
+```html 
+<!DOCTYPE html>
+<html>
+<head title="TO DO list"></head>
+<body>
+<h1>TO DO list</h1>
+<table>
+    {% for task in tasks %}
+        {% if task['done'] %}
+            {% set color = 'gray' %}
+        {% endif %}
+    <tr>
+        <td>
+            <div style="color: {{color}}">- {{task['title']}}</div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>
+```
+2. Modifier le code de la fonction `get_tasks()`:
+```python
+def get_tasks():
+    return render_template('tasks.html', tasks=tasks)
+```
+3. Rafraîchir la page dans le navigateur
+ 

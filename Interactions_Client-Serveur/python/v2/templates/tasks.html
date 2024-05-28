@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head title="TO DO list"></head>
+<body>
+<h1>TO DO list</h1>
+<table>
+    {% for task in tasks %}
+        {% if task['done'] %}
+        {% set color = 'gray' %}
+    {% endif %}
+    <tr>
+        <td>
+            <div style="color: {{color}}">- {{task['title']}}</div>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

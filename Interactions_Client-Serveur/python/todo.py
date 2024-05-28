@@ -31,7 +31,7 @@ def get_tasks():
 
 
 def get_tasks2():
-    return render_template('tasks2.html', tasks=tasks)
+    return render_template('tasks.html', tasks=tasks)
 
 
 def get_tasks3():

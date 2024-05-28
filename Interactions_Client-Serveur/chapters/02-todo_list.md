@@ -146,4 +146,49 @@ def get_tasks():
 2. Comment sont déclarées les instructions conditionelles ?
 3. Quelle est la signification de la syntaxe `{{ ma_variable }}` ?
 
-# Créer une nouvelle tâche
+## Créer une nouvelle tâche
+Nous allons maintenant ajouter un **formulaire** à notre page, afin de pouvoir créer des nouvelles tâches.
+1. Ajouter le code HTML suivant avant la balise `</table>`:
+```html
+<form action="/tasks" method="POST"><!-- 1 -->
+    <label>New task: </label><input type="text" name="title"/><!-- 2 -->
+    <input type="submit" value="Create"><!-- 3 -->
+</form>
+```
+2. Ajouter la fonction python suivante, qui sera appelée lorsque nous appuierons sur le bouton *Create*:
+```python
+def create_task():
+    result = request.form # 4
+    title = result['title'] # 5
+    tasks.append({'title': title, 'done': False}) # 6
+    return get_tasks() # 7
+```
+3. Modifier la fonction `init()`:
+```python 
+def init():
+    app = Flask(__name__)
+    app.add_url_rule('/tasks', view_func=get_tasks)
+    app.add_url_rule('/tasks', view_func=create_task, methods=["POST"]) # 8
+    app.run(debug=True)
+```
+4. Rafraîchir la page dans le navigateur
+
+ 
+### Analyse du code
+1. Déclare un formulaire HTML. La `method` `POST` sera utilisée dans la requête HTTP. 
+   Elle indique par convention que l'opération effectue des modifications. 
+   L' `action` contient l'URL à appeler lorsque le formulaire est envoyé (submit). 
+2. Balise texte
+3. Bouton create
+4. `result` contient les données du formulaire
+5. La variable `title` contient la valeur du champ (input) ayant le nom `title`
+6. Ajoute la nouvelle tâche à la variable globale
+7. Appelle `get_tasks()` pour renvoyer à nouveau la page HTML au navigateur 
+
+### Exercices
+1. Ouvrir l'onglet Network dans Firefox, ajouter de nouvelles tâches. Observez les requêtes HTTP.
+2. Rafraîchir la page. Que se passe-t-il ? A votre avis pourquoi?
+3. Utiliser la méthode `GET` dans le formulaire. Recommencer les points 1. et 2. Qu'observez-vous?
+
+
+

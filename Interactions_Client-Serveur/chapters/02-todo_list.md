@@ -264,7 +264,6 @@ sequenceDiagram
 from flask_session import Session
 
 def read_session_tasks():
-    print(session.get('tasks'))
     if 'tasks' in session:
         return session['tasks']
     else:

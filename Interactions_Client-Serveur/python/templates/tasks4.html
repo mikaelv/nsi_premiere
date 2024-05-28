@@ -5,9 +5,9 @@
 <h1>TO DO list</h1>
 <table>
     {% for task in tasks %}
-    {% if task['done'] %}
-    {% set color = 'gray' %}
-    {% set checked = 'checked' %}
+        {% if task['done'] %}
+            {% set color = 'gray' %}
+        {% set checked = 'checked' %}
     {% endif %}
     <tr>
         <form action="/tasks4/{{loop.index}}" method="POST">

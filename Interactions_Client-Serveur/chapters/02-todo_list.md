@@ -99,10 +99,10 @@ def init():
 2. Ajoutez une condition pour changer le `style` si la tâche a la valeur `done=True`.
 3. Modifiez la variable `tasks` pour ajouter une tâche.
 
-# Utiliser un template
+## Utiliser un template
 Renvoyer du code HTML directement dans une fonction Python est une mauvaise pratique.
 Il est préférable de séparer le code HTML et le code Python. 
-Cela permet d'identifier clairement le code d'affichage (view)  et le code de traitement (controller).
+Cela permet d'identifier clairement le code d'affichage (view) et le code de traitement (controller).
 
 Par ailleurs, certains développeurs sont plus spécialisés dans les interfaces graphiques (développeurs "Front-end"), 
 et d'autres dans la partie serveur (développeurs "Back-End"). 
@@ -140,3 +140,10 @@ def get_tasks():
 ```
 3. Rafraîchir la page dans le navigateur
  
+### Exercices
+1. Observez le code HTML généré
+1. Comment sont déclarées les boucles en Jinja?
+2. Comment sont déclarées les instructions conditionelles ?
+3. Quelle est la signification de la syntaxe `{{ ma_variable }}` ?
+
+# Créer une nouvelle tâche

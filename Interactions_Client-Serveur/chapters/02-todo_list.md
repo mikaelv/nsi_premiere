@@ -189,6 +189,10 @@ def init():
 1. Ouvrir l'onglet Network dans Firefox, ajouter de nouvelles tâches. Observez les requêtes HTTP.
 2. Rafraîchir la page. Que se passe-t-il ? A votre avis pourquoi?
 3. Utiliser la méthode `GET` dans le formulaire. Recommencer les points 1. et 2. Qu'observez-vous?
+   Est-il judicieux d'utiliser la méthode `GET` dans notre cas?
+ 
+Pour aller plus loin :
+1. Afin d'éviter le message du navigateur après un refresh, utiliser une redirection. Voir [refirects and errors](https://flask.palletsprojects.com/en/3.0.x/quickstart/#redirects-and-errors)
 
-
+## 
 

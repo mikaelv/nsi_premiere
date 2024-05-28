@@ -231,7 +231,7 @@ def init():
     app.add_url_rule('/tasks/<id>', view_func=update_task, methods=["POST"])
     ...
 ```
-4. Rafraîchir le navigateur
+4. Rafraîchir la page
 
 ### Exercices
 1. Modifier les tâches avec la checkbox
@@ -243,4 +243,63 @@ Pour aller plus loin :
 1. Ajouter un bouton "Delete" sur chaque tâche
 2. Ajouter un bouton "delete all done", qui supprime toutes les tâches avec `done=True`
 3. Utiliser une redirection pour éviter le problème d'URL et de rafraîchissement.
+
+## Gestion des sessions 
+Notre application commence à avoir une utilité pour gérer une liste de tâches.
+Cependant, si deux utilisateurs se connectent à notre serveur, ils verront tous les deux les mêmes tâches.
+Il faudrait pouvoir avoir une liste de tâches propre à chaque utilisateur.
+
+Pour cela, nous allons utiliser le concept de "session". Le procédé est le suivant:
+```mermaid
+sequenceDiagram
+    Client->>+Serveur: GET /tasks
+    Serveur-->>-Client: Set-Cookie: session=1234
+    Client->>+Serveur: POST /tasks, Cookie: session=1234
+```
+1. Le serveur demande au client de stocker un Cookie
+2. Toutes les requêtes faites au serveur envoient le cookie. Cela permet au serveur d'identifier le client.
+
+1. Ajouter le code suivant:
+```python
+from flask_session import Session
+
+def read_session_tasks():
+    print(session.get('tasks'))
+    if 'tasks' in session:
+        return session['tasks']
+    else:
+        tasks = []
+        session['tasks'] = tasks
+        return tasks
+
+
+def write_session_tasks(tasks):
+    session['tasks'] = tasks
+```
+2. Modifier la fonction `init()`:
+```python
+def init():
+    app = Flask(__name__)
+    app.config['SESSION_TYPE'] = 'filesystem'
+    app.secret_key = 'supersecretkey'
+    Session(app)
+    ...
+```
+3. Supprimer la déclaration `tasks`
+4. Partout où la variable `tasks` est utilisée, appeler la fonction `read_session_tasks` pour lire, 
+   ou la fonction `read_session_tasks()` pour modifier.
+3. Rafraîchir la page
+
+### Exercices
+1. Observer les headers HTTP `Cookie` et `Set-Cookie`
+2. Créer de nouvelles tâches. Fermer/Ouvrir le navigateur, rafraîchir la page
+3. Supprimer le cookie de session dans le navigateur. Rafraîchir la page
+4. Demander à son voisin d'utiliser son serveur
  
+## Pour aller plus loin
+1. Ajouter une fonction de recherche, qui filtrera les résultats. Utiliser la méthode `GET`
+2. Effectuer la recherche du côté client, en utilisant Javascript
+3. Créer une feuille CSS pour améliorer le look
+4. Ajouter un attribut `category`, en utilisant une "drop-down" list.
+5. Ajouter une fonction de tri
+6. Effectuer le tri du côté client, en utilisant Javascript

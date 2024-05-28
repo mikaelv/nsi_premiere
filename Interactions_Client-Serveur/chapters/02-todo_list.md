@@ -249,7 +249,7 @@ Notre application commence à avoir une utilité pour gérer une liste de tâche
 Cependant, si deux utilisateurs se connectent à notre serveur, ils verront tous les deux les mêmes tâches.
 Il faudrait pouvoir avoir une liste de tâches propre à chaque utilisateur.
 
-Pour cela, nous allons utiliser le concept de "session". Le procédé est le suivant:
+Pour cela, nous allons utiliser le concept de "session". Le procédé est le suivant :
 ```mermaid
 sequenceDiagram
     Client->>+Serveur: GET /tasks
@@ -259,6 +259,8 @@ sequenceDiagram
 1. Le serveur demande au client de stocker un Cookie
 2. Toutes les requêtes faites au serveur envoient le cookie. Cela permet au serveur d'identifier le client.
 
+
+Nous allons conserver une liste de tâche pour chaque utilisateur en utilisant la bibliothèque [flask_session](https://flask-session.readthedocs.io/en/latest/introduction.html).
 1. Ajouter le code suivant:
 ```python
 from flask_session import Session

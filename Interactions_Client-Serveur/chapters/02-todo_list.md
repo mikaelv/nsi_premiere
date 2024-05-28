@@ -194,5 +194,53 @@ def init():
 Pour aller plus loin :
 1. Afin d'éviter le message du navigateur après un refresh, utiliser une redirection. Voir [refirects and errors](https://flask.palletsprojects.com/en/3.0.x/quickstart/#redirects-and-errors)
 
-## 
+## Modifier une tâche
+Nous allons maintenant ajouter une "checkbox" à côté de chaque tâche afin de pouvoir indiquer qu'elle est terminée (`done=True`).
+Pour cela, nous devons ajouter un "mini" formulaire pour chaque tâche.
+1. Modifier le code HTML entre les deux balises `<tr>` et `</tr>`:
+```html
+    <tr>
+        <form action="/tasks4/{{loop.index}}" method="POST">
+            <td>
+                <input type="checkbox" name="done" {{ checked }} />
+            </td>
+            <td>
+                <div style="color: {{color}}">- {{task['title']}}</div>
+            </td>
+            <td><input type="submit" value="save"/></td>
+        </form>
+    </tr>
+```
+2. Ajouter la fonction Python suivante:
+```python
+def update_task(id):
+    form = request.form
+    i = int(id) - 1
+    task = tasks[i]
+    if form.get('done'):
+        task['done'] = True
+    else:
+        task['done'] = False
 
+    return get_tasks()
+```
+3. Modifier la fonction `init()` pour ajouter la nouvelle url:
+```python    
+def init():
+    ...
+    app.add_url_rule('/tasks/<id>', view_func=update_task, methods=["POST"])
+    ...
+```
+4. Rafraîchir le navigateur
+
+### Exercices
+1. Modifier les tâches avec la checkbox
+2. Il n'est pas très pratique de devoir cliquer sur le bouton *save*. 
+   Supprimez-le et ajouter un "event handler" sur la checkbox: `onclick="submit()"`
+3. Observez l'URL après avoir modifié une tâche. Rafraîchir la page. Que se passe-t-il? Est-ce satisfaisant?
+
+Pour aller plus loin :
+1. Ajouter un bouton "Delete" sur chaque tâche
+2. Ajouter un bouton "delete all done", qui supprime toutes les tâches avec `done=True`
+3. Utiliser une redirection pour éviter le problème d'URL et de rafraîchissement.
+ 
